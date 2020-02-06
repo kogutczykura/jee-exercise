@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="_cart-container">
+        {{#unless cart}}
+            Koszyk jest pusty
+        {{/unless}}
+
+        {{#if cart}}
+            {{#cart.items}}
+                {{productName}} {{productPrice}}
+            {{/cart.items}}
+        {{/if}}
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/bootstrap.css"/>
+    <meta charset="UTF-8">
+    <title>Sklep</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="row">
+
+            <div class="col-md-10">
+                {{>products}}
+
+            </div>
+            <div class="col-md-2">
+                {{>cartEmpty}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        function findCartId() {
+            return localStorage.cartId != null ? localStorage.cartId : 0;
+        }
+
+        function loadCart() {
+            const cartId = findCartId();
+            fetch('/cart/'+cartId)
+            .then((response) => response.text())
+            .then(cartHtml => {
+               const cartContainer = document.getElementsByClassName("_cart-container").item(0);
+               cartContainer.innerHTML = cartHtml;
+            });
+        }
+
+        loadCart();
+
+
+        function onProductClick(button) {
+            var productId = button.getAttribute("data-product-id");
+            var cartId = findCartId();
+
+            const data = { cartId: cartId,
+            productId: productId}
+            fetch('/rest/cart/items', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: JSON.stringify(data),
+            })
+            .then((response)=> response.json())
+            .then((data) => {
+                localStorage.cartId = data.id;
+                loadCart();
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
+
+
+        }
+
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="/static/bootsrtap.js"></script>
+</body>
+
+</html>
