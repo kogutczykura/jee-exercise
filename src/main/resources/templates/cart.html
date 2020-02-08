@@ -1,13 +1,19 @@
-<div class="row">
-    <div class="_cart-container">
-        {{#unless cart}}
+{{#unless cart}}
+    <div class="col-xs-12 text-center">
+        <div class="alert alert-warning" role="alert">
             Koszyk jest pusty
-        {{/unless}}
-
-        {{#if cart}}
-            {{#cart.items}}
-                {{productName}} {{productPrice}}
-            {{/cart.items}}
-        {{/if}}
+        </div>
     </div>
-</div>
+{{/unless}}
+
+{{#if cart}}
+    <ul>
+        {{#cart.items}}
+            <li>
+                {{productName}} {{productPrice}}
+            </li>
+        {{/cart.items}}
+    </ul>
+
+    <button class="btn btn-block btn-success">Zamów</button>
+{{/if}}

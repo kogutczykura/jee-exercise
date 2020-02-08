@@ -1,18 +1,27 @@
 <div class="row ">
 
     {{#unless products}}
-        <div class="alert alert-warning" role="alert">
-            Brak produktów
+        <div class="col-xs-12 text-center">
+            <div class="alert alert-warning" role="alert">
+                Brak produktów
+            </div>
         </div>
     {{/unless}}
     {{#products}}
         <div class="col-md-4 col-xs-12">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body text-center">
                     <p class="font-weight-bold">{{name}}</p>
-                    {{description}}
-                    {{price}} ZL <br/>
-                    <button onclick="onProductClick(this)" type="button" class="btn btn-primary _add-product-button" data-product-id="{{id}}">Dodaj do koszyka</button>
+                    <span class="d-block">{{description}}</span>
+                    <span class="d-block mb-5">{{price}} ZL</span>
+                    <button
+                        onclick="onProductClick(this)"
+                        type="button"
+                        class="btn btn-primary btn-block align-self-end mt-auto _add-product-button"
+                        data-product-id="{{id}}"
+                    >
+                        Dodaj do koszyka
+                    </button>
                 </div>
             </div>
         </div>
