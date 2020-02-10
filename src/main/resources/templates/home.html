@@ -69,7 +69,9 @@
         var cartItemId = button.getAttribute("data-cartItem-id");
         var cartId = findCartId();
 
-        fetch('/rest/cart/' + cartId +cartItemId, {
+        const url = '/rest/cart/' + cartId+ '/'+cartItemId;
+        console.log(url);
+        fetch(url, {
             method: 'DELETE',
         })
                 .then(res => res.text()) // or res.json()
