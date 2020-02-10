@@ -69,14 +69,17 @@
         var cartItemId = button.getAttribute("data-cartItem-id");
         var cartId = findCartId();
 
-        fetch('rest/cart/' + cartId +cartItemId, {
+        fetch('/rest/cart/' + cartId +cartItemId, {
             method: 'DELETE',
         })
                 .then(res => res.text()) // or res.json()
-                .then(res => console.log(res))
-
-        loadCart();
+                .then(res =>{
+                    console.log(res)
+                    loadCart()
+                })
     }
+
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

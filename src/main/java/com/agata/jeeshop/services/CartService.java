@@ -82,8 +82,8 @@ public class CartService {
         for (CartItem item : cart.getItems()) {
             if (item.getId() == id)
                 cartItemRepository.delete(item);
-            else
-                throw new RuntimeException("Cart item with id: " + cart.getItems() + " not found");
+
+              //  throw new RuntimeException("Cart item with id: " + cart.getItems() + " not found");
         }
     }
 }
