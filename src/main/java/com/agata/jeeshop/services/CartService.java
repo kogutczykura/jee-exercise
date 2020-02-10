@@ -2,6 +2,7 @@ package com.agata.jeeshop.services;
 
 import com.agata.jeeshop.dto.AddProductToCartRequest;
 import com.agata.jeeshop.dto.CartDto;
+import com.agata.jeeshop.dto.CartItemDto;
 import com.agata.jeeshop.dto.ProductDto;
 import com.agata.jeeshop.mappers.CartMapper;
 import com.agata.jeeshop.models.Cart;
@@ -64,4 +65,25 @@ public class CartService {
 
         return cartMapper.toDto(cart);
     }
+
+    public String calculateTotalAmount(Long id){
+
+        CartDto cartDto = this.findById(id);
+        Double totalAmount=0.;
+        for (CartItemDto cartItem:cartDto.getItems()
+             ) {
+            totalAmount+=cartItem.getProductPrice();
+        }
+        this.findById(id).setTotalAmount(totalAmount);
+
+
+        return String.format("%.2f", totalAmount);
+    }
+
+
+
+
+   // public void removeProduct(Long id, Long itemId) {
+     //   cartRepository.getOne(id).getItems().remove(itemId);
+    //}
 }
