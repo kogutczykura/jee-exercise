@@ -64,6 +64,13 @@
         .catch((error) => {
             console.log(error);
         });
+        }
+    function removeProduct(button) {
+        var cartItemId = button.getAttribute("data-cartItem-id");
+        var cartId = findCartId();
+
+
+        loadCart();
     }
 </script>
 

@@ -30,4 +30,10 @@ public class CartMapper {
         return cartItemDto;
     }
 
+    public CartItem fromDto(CartItemDto cartItemDto) {
+        CartItem cartItem = new CartItem();
+        BeanUtils.copyProperties(cartItemDto, cartItem);
+        return cartItem;
+    }
+
 }

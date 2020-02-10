@@ -10,7 +10,7 @@
     <ul>
         {{#cart.items}}
             <li>
-                {{productName}} {{productPrice}}
+                {{productName}} {{productPrice}} <button onclick="removeProduct(this)" type="button" class="btn btn-light  ">-</button>
             </li>
         {{/cart.items}}
     </ul>

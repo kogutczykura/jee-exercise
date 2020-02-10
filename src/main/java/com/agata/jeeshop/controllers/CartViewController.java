@@ -3,6 +3,7 @@ package com.agata.jeeshop.controllers;
 import com.agata.jeeshop.dto.CartItemDto;
 import com.agata.jeeshop.dto.ProductDto;
 import com.agata.jeeshop.models.Cart;
+import com.agata.jeeshop.models.CartItem;
 import com.agata.jeeshop.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,9 @@ public class CartViewController {
         return mav;
     }
 
-   /*   @DeleteMapping("/{id}/{itemId}")
-        public ResponseEntity<ProductDto> removeProduct(@PathVariable("id") final long id, @PathVariable("itemId") final long itemId){
-         cartService.removeProduct(id,itemId);
-       return new ResponseEntity<>(HttpStatus.OK);
-      }*/
+     @DeleteMapping("/{cartId}/{cartItemId}")
+     public ResponseEntity<CartItemDto> removePorduct(@PathVariable("cartId") final long cartId, @PathVariable("cartItemId") final long cartItemId){
+
+         return new ResponseEntity<>(HttpStatus.OK);
+      }
 }

@@ -80,10 +80,8 @@ public class CartService {
         return String.format("%.2f", totalAmount);
     }
 
-
-
-
-   // public void removeProduct(Long id, Long itemId) {
-     //   cartRepository.getOne(id).getItems().remove(itemId);
-    //}
+   public CartItemDto removeProduct(CartItemDto cartItemDto) {
+        Cart cart = cartRepository.save(cartMapper.fromDto(cartItemDto));
+        return cartMapper.toDto(cart);
+    }
 }
