@@ -28,8 +28,8 @@ public class CartService {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-    public CartDto findById(long id){
-        if(id == 0) {
+    public CartDto findById(long id) {
+        if (id == 0) {
             return null;
         }
 
@@ -39,14 +39,11 @@ public class CartService {
         return cartMapper.toDto(cart);
     }
 
-    public  CartDto addToCart(AddProductToCartRequest addProductToCartRequest){
+    public CartDto addToCart(AddProductToCartRequest addProductToCartRequest) {
         Cart cart;
-        if(addProductToCartRequest.getCartId()==0)
-        {
+        if (addProductToCartRequest.getCartId() == 0) {
             cart = new Cart();
-        }
-        else
-        {
+        } else {
             cart = cartRepository.getOne(addProductToCartRequest.getCartId());
         }
 
@@ -66,13 +63,13 @@ public class CartService {
         return cartMapper.toDto(cart);
     }
 
-    public String calculateTotalAmount(Long id){
+    public String calculateTotalAmount(Long id) {
 
         CartDto cartDto = this.findById(id);
-        Double totalAmount=0.;
-        for (CartItemDto cartItem:cartDto.getItems()
-             ) {
-            totalAmount+=cartItem.getProductPrice();
+        Double totalAmount = 0.;
+        for (CartItemDto cartItem : cartDto.getItems()
+        ) {
+            totalAmount += cartItem.getProductPrice();
         }
         this.findById(id).setTotalAmount(totalAmount);
 
@@ -80,8 +77,13 @@ public class CartService {
         return String.format("%.2f", totalAmount);
     }
 
-   public CartItemDto removeProduct(CartItemDto cartItemDto) {
-        Cart cart = cartRepository.save(cartMapper.fromDto(cartItemDto));
-        return cartMapper.toDto(cart);
+    public void removeProduct(Long cartId, Long id) {
+        Cart cart = cartRepository.getOne(cartId);
+        for (CartItem item : cart.getItems()) {
+            if (item.getId() == id)
+                cartItemRepository.delete(item);
+            else
+                throw new RuntimeException("Cart item with id: " + cart.getItems() + " not found");
+        }
     }
 }

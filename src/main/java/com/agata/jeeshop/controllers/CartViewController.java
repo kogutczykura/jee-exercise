@@ -28,9 +28,4 @@ public class CartViewController {
         return mav;
     }
 
-     @DeleteMapping("/{cartId}/{cartItemId}")
-     public ResponseEntity<CartItemDto> removePorduct(@PathVariable("cartId") final long cartId, @PathVariable("cartItemId") final long cartItemId){
-
-         return new ResponseEntity<>(HttpStatus.OK);
-      }
 }
