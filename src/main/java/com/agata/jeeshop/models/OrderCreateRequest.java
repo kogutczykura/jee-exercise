@@ -8,11 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+
 @Getter
 @Setter
 public class OrderCreateRequest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long cartId;
+    private String vorname;
+    private String name;
+    private String adress;
 }
