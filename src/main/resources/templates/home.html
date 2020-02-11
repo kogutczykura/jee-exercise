@@ -80,6 +80,25 @@
                     loadCart()
                 })
     }
+    function orderPurchase(button) {
+        var cartId = findCartId();
+
+        fetch('/rest/order/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cartId),
+        })
+                .then((response)=> response.json())
+                .then((cartId) => {
+                    loadCart();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+    }
 
 
 </script>
