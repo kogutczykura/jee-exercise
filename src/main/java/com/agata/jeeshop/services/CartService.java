@@ -80,9 +80,10 @@ public class CartService {
     public void removeProduct(Long cartId, Long id) {
         Cart cart = cartRepository.getOne(cartId);
         for (CartItem item : cart.getItems()) {
-            if (item.getId() == id)
+            if (item.getId() == id){
                 cartItemRepository.delete(item);
-            break;
+                break;
+            }
         }
         throw new RuntimeException("Cart item with id: " + cart.getItems() + " not found");
     }

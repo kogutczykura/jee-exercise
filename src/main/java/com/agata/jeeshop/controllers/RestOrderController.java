@@ -22,7 +22,7 @@ public class RestOrderController {
 
     @PostMapping
     public ResponseEntity<OrderCreateRequest> submitOrder(@RequestBody OrderCreateRequest orderedCart){
-
+        orderService.createOrder(orderedCart.getCartId());
         return new ResponseEntity<?>;
     }
 }
