@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class OrderedCart {
+public class OrderCreateRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;

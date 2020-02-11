@@ -1,8 +1,9 @@
 package com.agata.jeeshop.controllers;
 
 import com.agata.jeeshop.dto.CartDto;
-import com.agata.jeeshop.models.OrderedCart;
+import com.agata.jeeshop.models.OrderCreateRequest;
 import com.agata.jeeshop.services.CartService;
+import com.agata.jeeshop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RestOrderController {
     @Autowired
     private CartService cartService;
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderedCart> submitOrder(@RequestBody OrderedCart orderedCart){
-        CartDto cartDto = cartService.addToOrdered(orderedCart.getCartId());
-        return new ResponseEntity<>(cartDto, HttpStatus.CREATED);
+    public ResponseEntity<OrderCreateRequest> submitOrder(@RequestBody OrderCreateRequest orderedCart){
+
+        return new ResponseEntity<>( HttpStatus.CREATED);
     }
 }
