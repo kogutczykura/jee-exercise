@@ -23,8 +23,4 @@ public class RestAdminProductController {
         ProductDto created = productService.addProductDto(productDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
-
-
-
-
 }
