@@ -68,6 +68,10 @@ public class CartService {
 
         CartDto cartDto = this.findById(id);
         Double totalAmount = 0.;
+        if(cartDto == null)
+        {
+            return String.format("%.2f", 0.0);
+        }
         for (CartItemDto cartItem : cartDto.getItems()
         ) {
             totalAmount += cartItem.getProductPrice();

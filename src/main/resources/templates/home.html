@@ -99,7 +99,15 @@
                 .catch((error) => {
                     console.log(error);
                 });
-
+        fetch('/rest/order/', {
+            method: 'DELETE',
+        })
+                .then(res =>{
+                    res.json()
+                .then(res =>{
+                    delete localStorage.cartId
+                    loadCart()})
+                })
     }
 
 

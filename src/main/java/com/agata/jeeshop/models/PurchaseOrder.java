@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class PurchaseOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartId;
+    private Long id;
 
     @OneToOne Cart cart;
 }

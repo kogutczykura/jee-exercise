@@ -6,8 +6,11 @@ import com.agata.jeeshop.models.OrderCreateRequest;
 import com.agata.jeeshop.models.PurchaseOrder;
 import com.agata.jeeshop.respositories.CartItemRepository;
 import com.agata.jeeshop.respositories.CartRepository;
+import com.agata.jeeshop.respositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 public class OrderService {
@@ -15,17 +18,24 @@ public class OrderService {
     @Autowired
     private CartRepository cartRepository;
     @Autowired
-    private CartItemRepository cartItemRepository;
+    private OrderRepository orderRepository;
 
+    @Transactional
     public PurchaseOrderDto createOrder(OrderCreateRequest orderCreateRequest){
-        Cart cart = cartRepository.getOne(orderCreateRequest.getCartId());
-
+        Cart cart;
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.setCartId(orderCreateRequest.getCartId());
+        PurchaseOrderDto purchaseOrderDto = new PurchaseOrderDto();
 
+        cart = cartRepository.getOne(orderCreateRequest.getCartId());
+        cart.setSold(true);
+        purchaseOrder.setCart(cart);
 
-        cartRepository.save();
+        cartRepository.save(cart);
+        orderRepository.save(purchaseOrder);
 
-        return null;
+        purchaseOrderDto.setId(purchaseOrder.getId());
+        purchaseOrderDto.setCartId(cart.getId());
+
+        return purchaseOrderDto;
     }
 }
