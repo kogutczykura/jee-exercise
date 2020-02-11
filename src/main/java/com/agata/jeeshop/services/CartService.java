@@ -28,6 +28,7 @@ public class CartService {
     @Autowired
     private CartItemRepository cartItemRepository;
 
+
     public CartDto findById(long id) {
         if (id == 0) {
             return null;
@@ -85,7 +86,6 @@ public class CartService {
                 break;
             }
         }
-        throw new RuntimeException("Cart item with id: " + cart.getItems() + " not found");
+      //  throw new RuntimeException("Cart item with id: " + cart.getItems() + " not found");
     }
-
 }

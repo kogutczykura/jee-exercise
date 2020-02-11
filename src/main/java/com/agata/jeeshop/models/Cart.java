@@ -14,7 +14,10 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private boolean sold;
 
     @OneToMany(mappedBy = "cart")
     private List<CartItem> items = new ArrayList<>();
+
+    @OneToOne(mappedBy = "cart") PurchaseOrder purchaseOrder;
 }
