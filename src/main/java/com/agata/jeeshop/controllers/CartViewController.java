@@ -23,7 +23,6 @@ public class CartViewController {
     public ModelAndView getCartView(@PathVariable("id") final long id){
         ModelAndView mav = new ModelAndView();
         mav.addObject("cart", cartService.findById(id));
-        mav.addObject("totalAmount", cartService.calculateTotalAmount(id));
         mav.setViewName("cart");
         return mav;
     }

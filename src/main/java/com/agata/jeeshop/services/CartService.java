@@ -37,7 +37,9 @@ public class CartService {
         Optional<Cart> cartOptional = cartRepository.findById(id);
         Cart cart = cartOptional.orElse(null);
 
-        return cartMapper.toDto(cart);
+        CartDto cartDto = cartMapper.toDto(cart);
+        cartDto.setTotalAmount(calculateTotalAmount(cartDto));
+        return  cartDto;
     }
 
     public CartDto addToCart(AddProductToCartRequest addProductToCartRequest) {
@@ -64,20 +66,16 @@ public class CartService {
         return cartMapper.toDto(cart);
     }
 
-    public String calculateTotalAmount(Long id) {
-
-        CartDto cartDto = this.findById(id);
+    public String calculateTotalAmount(CartDto cartDto) {
         Double totalAmount = 0.;
-        if(cartDto == null)
-        {
+
+        if(cartDto == null) {
             return String.format("%.2f", 0.0);
         }
-        for (CartItemDto cartItem : cartDto.getItems()
-        ) {
+
+        for (CartItemDto cartItem : cartDto.getItems()) {
             totalAmount += cartItem.getProductPrice();
         }
-        this.findById(id).setTotalAmount(totalAmount);
-
 
         return String.format("%.2f", totalAmount);
     }
@@ -85,7 +83,7 @@ public class CartService {
     public void removeProduct(Long cartId, Long id) {
         Cart cart = cartRepository.getOne(cartId);
         for (CartItem item : cart.getItems()) {
-            if (item.getId() == id){
+            if (item.getId().equals(id)){
                 cartItemRepository.delete(item);
                 break;
             }

@@ -1,6 +1,7 @@
 package com.agata.jeeshop.controllers;
 
 import com.agata.jeeshop.dto.CartDto;
+import com.agata.jeeshop.dto.OrderFormDto;
 import com.agata.jeeshop.dto.PurchaseOrderDto;
 import com.agata.jeeshop.models.OrderCreateRequest;
 import com.agata.jeeshop.services.CartService;
@@ -23,7 +24,7 @@ public class RestOrderController {
 
     @PostMapping
     public ResponseEntity<PurchaseOrderDto> submitOrder(@RequestBody OrderCreateRequest orderedCart){
-        PurchaseOrderDto purchaseOrderDto = orderService.createOrder(orderedCart);
+        PurchaseOrderDto purchaseOrderDto = orderService.createOrder(orderedCart.getCartId(), new OrderFormDto());
         return new ResponseEntity<PurchaseOrderDto>(purchaseOrderDto,HttpStatus.CREATED);
     }
 }

@@ -13,6 +13,11 @@ public class PurchaseOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne Cart cart;
+    @OneToOne
+    private Cart cart;
+
+    private String firstName;
+    private String lastName;
+    private String email;
 }
 

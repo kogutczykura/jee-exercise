@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Podsumowanie zamówienia</title>
+</head>
+<body>
+    <h1>
+        <a href="/" class="text-center text-success">Wróc do zakupów</a>
+    </h1>
+    {{order.firstName}}
+    {{order.lastName}}
+    {{order.email}}
+
+    {{>cart}}
+
+    <script>
+        delete localStorage.cartId;
+    </script>
+</body>
+</html>

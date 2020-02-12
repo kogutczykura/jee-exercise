@@ -8,4 +8,8 @@ import lombok.Setter;
 public class PurchaseOrderDto {
     private Long id;
     private Long cartId;
+
+    private String firstName;
+    private String lastName;
+    private String email;
 }

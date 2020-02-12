@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="stylesheet" href="/static/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/all.css"/>
+
     <meta charset="UTF-8">
     <title>Sklep</title>
 </head>
@@ -26,29 +27,41 @@
 
 <script>
     function findCartId() {
-        console.log({cartId: localStorage.cartId != null ? localStorage.cartId : 0});
         return localStorage.cartId != null ? localStorage.cartId : 0;
     }
 
     function loadCart() {
         const cartId = findCartId();
-        fetch('/cart/'+cartId)
-        .then((response) => response.text())
-        .then(cartHtml => {
-           const cartContainer = document.getElementsByClassName("_cart-container").item(0);
-           cartContainer.innerHTML = cartHtml;
-        });
+        fetch('/cart/' + cartId)
+            .then((response) => {
+                if(response.status !== 200) {
+                    return Promise.reject();
+                }
+                return response.text();
+            })
+            .then(cartHtml => {
+                const cartContainer = document.getElementsByClassName("_cart-container").item(0);
+                cartContainer.innerHTML = cartHtml;
+            })
+            .catch(err => {
+                if(findCartId()) {
+                    delete localStorage.cartId;
+                    loadCart();
+                }
+            });
     }
 
     loadCart();
-
 
     function onProductClick(button) {
         var productId = button.getAttribute("data-product-id");
         var cartId = findCartId();
 
-        const data = { cartId: cartId,
-        productId: productId}
+        const data = {
+            cartId: cartId,
+            productId: productId
+        };
+
         fetch('/rest/cart/items', {
             method: 'POST',
             headers: {
@@ -56,7 +69,7 @@
             },
             body: JSON.stringify(data),
         })
-        .then((response)=> response.json())
+        .then((response) => response.json())
         .then((data) => {
             localStorage.cartId = data.id;
             loadCart();
@@ -64,26 +77,27 @@
         .catch((error) => {
             console.log(error);
         });
-        }
+    }
+
     function removeProduct(button) {
         var cartItemId = button.getAttribute("data-cartItem-id");
         var cartId = findCartId();
 
-        const url = '/rest/cart/' + cartId+ '/'+cartItemId;
-        console.log(url);
+        const url = '/rest/cart/' + cartId + '/' + cartItemId;
+
         fetch(url, {
             method: 'DELETE',
         })
-                .then(res => res.text()) // or res.json()
-                .then(res =>{
-                    console.log(res)
-                    loadCart()
-                })
+        .then(res => res.text())
+        .then(res => {
+            loadCart()
+        });
     }
-    function orderPurchase(button) {
+
+    function createOrder() {
         var cartId = findCartId();
 
-        const data = { cartId: cartId}
+        const data = {cartId: cartId}
 
         fetch('/rest/order/', {
             method: 'POST',
@@ -92,22 +106,19 @@
             },
             body: JSON.stringify(data),
         })
-                .then((response)=> response.json())
-                .then((cartId) => {
-                    loadCart();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        fetch('/rest/order/', {
-            method: 'DELETE',
+        .then((response) => response.json())
+        .then((cartId) => {
+            delete localStorage.cartId;
+            loadCart();
         })
-                .then(res =>{
-                    res.json()
-                .then(res =>{
-                    delete localStorage.cartId
-                    loadCart()})
-                })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
+    function orderPurchase(button) {
+        // createOrder();
+        window.location.href = '/order/form/' + findCartId();
     }
 
 

@@ -9,11 +9,16 @@
 {{#if cart}}
     <ul>
         {{#cart.items}}
-            <li>
-                {{productName}} {{productPrice}} <button onclick="removeProduct(this)" type="button" class="btn btn-light" data-cartItem-id="{{id}}" >-</button>
+            <li class="d-flex justify-content-between p-2">
+                {{productName}} {{productPrice}}
+                {{#unless order}}
+                    <button onclick="removeProduct(this)" type="button" class="btn btn-dark align-self-end" data-cartItem-id="{{id}}" >-</button>
+                {{/unless}}
             </li>
         {{/cart.items}}
     </ul>
-    <div class="text-center">Suma: {{totalAmount}} </div>
-    <button onclick="orderPurchase(this)" class="btn btn-block btn-success">Zamów</button>
+    <div class="text-center font-weight-bold pb-3">Suma: {{cart.totalAmount}} </div>
+    {{#unless order}}
+        <button onclick="orderPurchase(this)" class="btn btn-block btn-success">Zamów</button>
+    {{/unless}}
 {{/if}}
